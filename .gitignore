@@ -1,0 +1,22 @@
+# IDEs e sistema operacional
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db
+
+# Segredos e configuracoes locais
+.env
+.env.*
+!.env.example
+
+# Logs e artefatos gerados
+*.log
+build/
+dist/
+out/
+target/
+bin/
+obj/
+coverage/
+node_modules/
