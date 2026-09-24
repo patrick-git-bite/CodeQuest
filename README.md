@@ -45,6 +45,51 @@ As atividades iniciais serao leituras, quizzes, exercicios textuais e desafios p
 
 Ficam fora do MVP: multiplayer, combate em tempo real, integracao com GitHub, pagamentos, IA corretora e compilacao de codigo.
 
+## Stack definida
+
+| Camada | Tecnologia | Motivo |
+| --- | --- | --- |
+| Linguagem | Java 21 | Versao LTS moderna e adequada ao estudo de POO |
+| Framework | Spring Boot | Simplifica a API, injecao de dependencias, validacoes e acesso ao banco |
+| Interface | Thymeleaf e Bootstrap | Permitem criar as telas no mesmo projeto Java, reduzindo a complexidade para a dupla |
+| Persistencia | Spring Data JPA e Hibernate | Integram os objetos Java ao banco relacional |
+| Banco de dados | PostgreSQL | Gratuito, open source e apropriado para os relacionamentos do dominio |
+| Migracoes | Flyway | Mantem a estrutura do banco versionada junto ao codigo |
+| Build | Maven | Gerencia dependencias, testes e empacotamento |
+| Testes | JUnit 5 e Mockito | Cobrem as regras de negocio e os padroes de projeto |
+
+O MVP sera uma aplicacao web unica. Frontend e backend separados, aplicativo mobile e interface 3D nao fazem parte do escopo inicial.
+
+## Banco de dados
+
+O banco escolhido e o **PostgreSQL**. Durante o desenvolvimento, ele podera ser executado gratuitamente na maquina de cada integrante, preferencialmente com Docker Compose para manter a mesma versao e configuracao.
+
+Para uma demonstracao publicada na internet, podera ser usado um servico com plano gratuito, como Neon ou Supabase. Esses planos possuem limites e podem mudar, por isso a aplicacao nao dependera de recursos exclusivos de um provedor. O PostgreSQL local continuara sendo a referencia do projeto.
+
+O H2 podera ser usado apenas em testes automatizados rapidos. Ele nao substituira o PostgreSQL no desenvolvimento nem na demonstracao final, evitando diferencas de comportamento entre os ambientes.
+
+## Ferramentas de modelagem
+
+Todas as ferramentas iniciais possuem opcao gratuita:
+
+| Finalidade | Ferramenta recomendada | Uso no projeto |
+| --- | --- | --- |
+| UML e fluxos | diagrams.net | Diagramas de classes, casos de uso e sequencia |
+| Modelo do banco | dbdiagram.io | Diagrama entidade-relacionamento e definicao das tabelas |
+| Prototipos de telas | Figma | Organizacao das telas antes da implementacao |
+| Diagramas versionados | Mermaid | Diagramas simples armazenados nos arquivos Markdown do repositorio |
+| Personagens 2D | Universal LPC Spritesheet Generator | Geracao inicial de avatares e sprites customizaveis |
+| Edicao de pixel art | Piskel | Ajustes nos sprites e criacao de elementos visuais simples |
+
+O projeto usara personagens **2D em pixel art**. Isso permite variacoes de aparencia e arquetipo sem exigir modelagem 3D. Antes de incluir qualquer sprite no repositorio, a licenca e os creditos do recurso utilizado deverao ser registrados.
+
+## Organizacao da dupla
+
+- cada funcionalidade sera implementada em uma branch propria e revisada pelo outro integrante;
+- ambos trabalharao com Java e regras de POO, evitando separar a equipe apenas entre frontend e backend;
+- tarefas, responsaveis, dependencias e criterios de aceite serao acompanhados no Notion;
+- decisoes tecnicas e diagramas finais serao mantidos tambem no repositorio.
+
 ## Estrutura inicial
 
 ```text
@@ -65,4 +110,4 @@ CodeQuest/
 
 ## Status
 
-Projeto em fase de modelagem. A linguagem, o framework e o banco de dados ainda serao definidos antes do inicio da implementacao.
+Projeto em fase de modelagem. A stack inicial foi definida com Java 21, Spring Boot, Thymeleaf e PostgreSQL; as regras e os diagramas ainda serao refinados antes da implementacao.
