@@ -19,4 +19,3 @@ target/
 bin/
 obj/
 coverage/
-node_modules/

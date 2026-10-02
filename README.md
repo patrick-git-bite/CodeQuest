@@ -50,19 +50,37 @@ Ficam fora do MVP: multiplayer, combate em tempo real, integracao com GitHub, pa
 | Camada | Tecnologia | Motivo |
 | --- | --- | --- |
 | Linguagem | Java 21 | Versao LTS moderna e adequada ao estudo de POO |
-| Framework | Spring Boot | Simplifica a API, injecao de dependencias, validacoes e acesso ao banco |
-| Interface | Thymeleaf e Bootstrap | Permitem criar as telas no mesmo projeto Java, reduzindo a complexidade para a dupla |
+| Aplicacao web | Spring Boot e Thymeleaf | Java controla as paginas e as regras de negocio |
+| Interface | HTML e CSS | O navegador exibe as telas geradas pelo servidor |
 | Persistencia | Spring Data JPA e Hibernate | Integram os objetos Java ao banco relacional |
 | Banco de dados | PostgreSQL | Gratuito, open source e apropriado para os relacionamentos do dominio |
 | Migracoes | Flyway | Mantem a estrutura do banco versionada junto ao codigo |
 | Build | Maven | Gerencia dependencias, testes e empacotamento |
 | Testes | JUnit 5 e Mockito | Cobrem as regras de negocio e os padroes de projeto |
 
-O MVP sera uma aplicacao web unica. Frontend e backend separados, aplicativo mobile e interface 3D nao fazem parte do escopo inicial.
+O MVP sera uma aplicacao web unica em Java. Thymeleaf produz o HTML no servidor; o navegador aplica o CSS. Aplicativo mobile e interface 3D nao fazem parte do escopo inicial.
+
+## Executar o projeto
+
+Requer Java 21 e PostgreSQL. Para iniciar o banco com Docker Compose, na raiz do repositorio:
+
+```bash
+docker compose up -d db
+```
+
+Em instalacoes que usam o executavel antigo, utilize `docker-compose up -d db`. Depois, na pasta `backend/`:
+
+```bash
+./mvnw spring-boot:run
+```
+
+Acesse `http://localhost:8081/`. O banco usa a porta local `5433`; as portas `8080` e `5432` ficam livres para outros projetos. Para executar os testes sem Docker, rode `./mvnw test` em `backend/`; os testes utilizam H2 em memoria.
+
+As credenciais padrao do PostgreSQL local sao `codequest`/`codequest`. Para utilizar outro banco, configure as variaveis `DB_URL`, `DB_USER` e `DB_PASSWORD` no processo Java. Se alterar a senha do Compose, use o mesmo `DB_PASSWORD` no Java. Nao use a senha padrao em ambientes publicados.
 
 ## Banco de dados
 
-O banco escolhido e o **PostgreSQL**. Durante o desenvolvimento, ele podera ser executado gratuitamente na maquina de cada integrante, preferencialmente com Docker Compose para manter a mesma versao e configuracao.
+O banco escolhido e o **PostgreSQL**. Durante o desenvolvimento, ele podera ser executado gratuitamente na maquina de cada integrante com Docker Compose para manter a mesma versao e configuracao. O Flyway cria a tabela inicial de escolas e cadastra as cinco trilhas, exibidas na pagina inicial a partir do banco.
 
 Para uma demonstracao publicada na internet, podera ser usado um servico com plano gratuito, como Neon ou Supabase. Esses planos possuem limites e podem mudar, por isso a aplicacao nao dependera de recursos exclusivos de um provedor. O PostgreSQL local continuara sendo a referencia do projeto.
 
@@ -76,7 +94,6 @@ Todas as ferramentas iniciais possuem opcao gratuita:
 | --- | --- | --- |
 | UML e fluxos | diagrams.net | Diagramas de classes, casos de uso e sequencia |
 | Modelo do banco | dbdiagram.io | Diagrama entidade-relacionamento e definicao das tabelas |
-| Prototipos de telas | Figma | Organizacao das telas antes da implementacao |
 | Diagramas versionados | Mermaid | Diagramas simples armazenados nos arquivos Markdown do repositorio |
 | Personagens 2D | Universal LPC Spritesheet Generator | Geracao inicial de avatares e sprites customizaveis |
 | Edicao de pixel art | Piskel | Ajustes nos sprites e criacao de elementos visuais simples |
@@ -97,8 +114,11 @@ CodeQuest/
 |-- docs/
 |   |-- modelo-dominio.md
 |   `-- requisitos.md
-|-- src/                  # implementacao futura
-|-- tests/                # testes futuros
+|-- backend/
+|   |-- src/main/java/          # controllers, dominio e repositorios Java
+|   |-- src/main/resources/     # templates, CSS e migrations Flyway
+|   `-- src/test/               # testes automatizados
+|-- compose.yaml               # PostgreSQL local
 |-- .gitignore
 `-- README.md
 ```
@@ -110,4 +130,4 @@ CodeQuest/
 
 ## Status
 
-Projeto em fase de modelagem. A stack inicial foi definida com Java 21, Spring Boot, Thymeleaf e PostgreSQL; as regras e os diagramas ainda serao refinados antes da implementacao.
+Base Java 21 com Spring Boot, Thymeleaf, JPA, Flyway e PostgreSQL criada. A primeira pagina exibe escolas persistidas no banco. Cadastro, personagem, masmorras, quizzes e evolucao ainda serao implementados.

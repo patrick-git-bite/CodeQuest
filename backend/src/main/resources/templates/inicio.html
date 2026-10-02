@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CodeQuest | Escolas de magia</title>
+    <link rel="stylesheet" th:href="@{/css/codequest.css}" href="/css/codequest.css">
+</head>
+<body>
+    <div class="layout">
+        <aside class="sidebar">
+            <a class="brand" th:href="@{/}" href="/" aria-label="CodeQuest, inicio">
+                <span class="brand-mark">CQ</span>
+                <span><strong>CODEQUEST</strong><small>Academia Arcana</small></span>
+            </a>
+            <nav aria-label="Navegacao principal">
+                <p class="nav-title">JORNADA</p>
+                <a class="nav-link active" th:href="@{/}" href="/">Escolas de magia</a>
+            </nav>
+            <p class="sidebar-note">Sua jornada comeca aqui.</p>
+        </aside>
+        <main>
+            <header class="topbar"><span>ACADEMIA ARCANA</span><span class="edition">CODEQUEST</span></header>
+            <div class="content">
+                <div class="intro">
+                    <p class="eyebrow">MAPA DO CONHECIMENTO</p>
+                    <h1>Escolas de magia</h1>
+                    <p>Conheça as disciplinas da Academia Arcana e descubra os caminhos do conhecimento.</p>
+                </div>
+                <section class="school-section" aria-labelledby="school-title">
+                    <div class="section-title"><p class="eyebrow">TRILHAS DE ESTUDO</p><h2 id="school-title">Escolas disponíveis</h2></div>
+                    <div class="school-grid">
+                        <article class="school" th:each="escola, item : ${escolas}">
+                            <span class="school-number" th:text="${#numbers.formatInteger(item.count, 2)}">01</span>
+                            <h3 th:text="${escola.nome}">Fundamentos</h3>
+                            <p th:text="${escola.descricao}">Logica, Git e orientacao a objetos.</p>
+                        </article>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
