@@ -1,127 +1,68 @@
 # CodeQuest
 
-CodeQuest e um RPG educacional para estudantes de programacao. O jogador evolui um personagem ao concluir leituras, quizzes e desafios praticos organizados em masmorras. A experiencia obtida em cada trilha de estudo altera dinamicamente o arquetipo do personagem.
+RPG simples de estudos de programacao, desenvolvido por Patrick e Michael para o Trabalho de Grau B de Programacao Orientada a Objetos.
 
-## Objetivo
+## Proposta
 
-O projeto sera usado como estudo de caso de Programacao Orientada a Objetos, com foco em:
+O estudante cria um personagem, responde pequenos quizzes em masmorras e ganha experiencia. Conforme estuda Backend ou Frontend, seu personagem muda de arquetipo. O objetivo e aprender Java e demonstrar os conceitos vistos em aula, nao construir uma plataforma educacional.
 
-- encapsulamento, heranca, polimorfismo e composicao;
-- padroes Strategy, State e Factory;
-- tratamento de excecoes customizadas;
-- persistencia do progresso em banco de dados;
-- testes das regras de evolucao do personagem.
+## Escopo inicial
 
-## Arquetipos
+- um personagem com nome, avatar, nivel, XP e energia;
+- duas trilhas de estudo: Backend e Frontend;
+- tres masmorras com desafios fixos cadastrados no programa;
+- quizzes com alternativas e correcao automatica;
+- recompensa concedida uma unica vez por desafio concluido;
+- nivel, pre-requisitos e energia para controlar o acesso;
+- botao de descanso para recuperar energia;
+- evolucao de Aprendiz para Mago do Backend, Ladino do Frontend ou Arquimago Fullstack.
 
-| Arquetipo | Trilha predominante |
-| --- | --- |
-| Mago do Backend | Logica, APIs, algoritmos e banco de dados |
-| Ladino do Frontend | Interfaces, HTML, CSS e JavaScript |
-| Paladino da Seguranca | Criptografia, protecao e boas praticas |
-| Necromante dos Dados | Estatistica, analise de dados e IA |
-| Arquimago Fullstack | Equilibrio avancado entre Backend e Frontend |
+Os valores de XP, custos e criterios de evolucao serao definidos com exemplos simples antes da implementacao. O progresso ficara em memoria e sera perdido ao fechar o programa. Salvar em arquivo e uma melhoria opcional.
 
-O personagem comeca como **Aprendiz**. Seu arquetipo e recalculado conforme a distribuicao de experiencia entre as escolas, sem recriar o personagem.
+Ficam fora do escopo: login, banco, servidor web, painel administrativo, moedas, loja, uploads, multiplayer, combate em tempo real, mapa exploravel, IA e execucao de codigo enviado pelo aluno.
 
-## Masmorras iniciais
+## Interface grafica
 
-1. **Caverna da Sintaxe:** atividades sobre variaveis, condicionais e repeticoes.
-2. **Labirinto da Persistencia:** atividades sobre SQL, modelagem e CRUD.
-3. **Torre da Arquitetura:** Boss Fight sobre APIs, validacoes, excecoes e padroes de projeto.
+Uma janela desktop em Java Swing com tres areas:
 
-As atividades iniciais serao leituras, quizzes, exercicios textuais e desafios praticos. O MVP nao executara nem corrigira codigo automaticamente.
+1. **Personagem:** avatar, arquetipo, nivel, XP e energia.
+2. **Masmorras:** desafios disponiveis e bloqueados.
+3. **Atividade:** pergunta, alternativas e resultado.
 
-## Escopo do MVP
+O visual sera medieval e 2D, usando imagens PNG e barras de progresso. Nao precisamos de motor de jogos, 3D ou animacoes complexas. Recursos externos devem ter licenca adequada e creditos registrados.
 
-- cadastro de usuario e personagem;
-- listagem de escolas, masmorras e atividades;
-- verificacao de nivel, energia e pre-requisitos;
-- registro de respostas e conclusao de atividades;
-- concessao de experiencia geral e por escola;
-- evolucao de nivel e mudanca dinamica de arquetipo;
-- desbloqueio de habilidades e novas masmorras;
-- consulta do progresso e historico de arquetipos.
+## Tecnologias e POO
 
-Ficam fora do MVP: multiplayer, combate em tempo real, integracao com GitHub, pagamentos, IA corretora e compilacao de codigo.
+- **Java 21:** linguagem do projeto.
+- **Swing:** interface grafica incluida no Java, sem framework externo.
+- **Colecoes Java:** desafios e progresso em memoria.
+- **Encapsulamento:** personagem controla XP, nivel e energia.
+- **Composicao:** masmorras possuem desafios.
+- **Heranca e polimorfismo:** contrato comum para desafios de quiz e leitura simples.
+- **Excecoes customizadas:** acesso sem pre-requisito, energia insuficiente e resposta invalida.
 
-## Stack definida
+Interfaces e padroes serao usados somente quando ajudarem a solucao e a dupla conseguir explica-los. Strategy, State e Factory nao sao requisitos obrigatorios.
 
-| Camada | Tecnologia | Motivo |
-| --- | --- | --- |
-| Linguagem | Java 21 | Versao LTS moderna e adequada ao estudo de POO |
-| Aplicacao web | Spring Boot e Thymeleaf | Java controla as paginas e as regras de negocio |
-| Interface | HTML e CSS | O navegador exibe as telas geradas pelo servidor |
-| Persistencia | Spring Data JPA e Hibernate | Integram os objetos Java ao banco relacional |
-| Banco de dados | PostgreSQL | Gratuito, open source e apropriado para os relacionamentos do dominio |
-| Migracoes | Flyway | Mantem a estrutura do banco versionada junto ao codigo |
-| Build | Maven | Gerencia dependencias, testes e empacotamento |
-| Testes | JUnit 5 e Mockito | Cobrem as regras de negocio e os padroes de projeto |
-
-O MVP sera uma aplicacao web unica em Java. Thymeleaf produz o HTML no servidor; o navegador aplica o CSS. Aplicativo mobile e interface 3D nao fazem parte do escopo inicial.
-
-## Executar o projeto
-
-Requer Java 21 e PostgreSQL. Para iniciar o banco com Docker Compose, na raiz do repositorio:
-
-```bash
-docker compose up -d db
-```
-
-Em instalacoes que usam o executavel antigo, utilize `docker-compose up -d db`. Depois, na pasta `backend/`:
-
-```bash
-./mvnw spring-boot:run
-```
-
-Acesse `http://localhost:8081/`. O banco usa a porta local `5433`; as portas `8080` e `5432` ficam livres para outros projetos. Para executar os testes sem Docker, rode `./mvnw test` em `backend/`; os testes utilizam H2 em memoria.
-
-As credenciais padrao do PostgreSQL local sao `codequest`/`codequest`. Para utilizar outro banco, configure as variaveis `DB_URL`, `DB_USER` e `DB_PASSWORD` no processo Java. Se alterar a senha do Compose, use o mesmo `DB_PASSWORD` no Java. Nao use a senha padrao em ambientes publicados.
-
-## Banco de dados
-
-O banco escolhido e o **PostgreSQL**. Durante o desenvolvimento, ele podera ser executado gratuitamente na maquina de cada integrante com Docker Compose para manter a mesma versao e configuracao. O Flyway cria a tabela inicial de escolas e cadastra as cinco trilhas, exibidas na pagina inicial a partir do banco.
-
-Para uma demonstracao publicada na internet, podera ser usado um servico com plano gratuito, como Neon ou Supabase. Esses planos possuem limites e podem mudar, por isso a aplicacao nao dependera de recursos exclusivos de um provedor. O PostgreSQL local continuara sendo a referencia do projeto.
-
-O H2 podera ser usado apenas em testes automatizados rapidos. Ele nao substituira o PostgreSQL no desenvolvimento nem na demonstracao final, evitando diferencas de comportamento entre os ambientes.
-
-## Ferramentas de modelagem
-
-Todas as ferramentas iniciais possuem opcao gratuita:
-
-| Finalidade | Ferramenta recomendada | Uso no projeto |
-| --- | --- | --- |
-| UML e fluxos | diagrams.net | Diagramas de classes, casos de uso e sequencia |
-| Modelo do banco | dbdiagram.io | Diagrama entidade-relacionamento e definicao das tabelas |
-| Diagramas versionados | Mermaid | Diagramas simples armazenados nos arquivos Markdown do repositorio |
-| Personagens 2D | Universal LPC Spritesheet Generator | Geracao inicial de avatares e sprites customizaveis |
-| Edicao de pixel art | Piskel | Ajustes nos sprites e criacao de elementos visuais simples |
-
-O projeto usara personagens **2D em pixel art**. Isso permite variacoes de aparencia e arquetipo sem exigir modelagem 3D. Antes de incluir qualquer sprite no repositorio, a licenca e os creditos do recurso utilizado deverao ser registrados.
-
-## Organizacao da dupla
-
-- cada funcionalidade sera implementada em uma branch propria e revisada pelo outro integrante;
-- ambos trabalharao com Java e regras de POO, evitando separar a equipe apenas entre frontend e backend;
-- tarefas, responsaveis, dependencias e criterios de aceite serao acompanhados no Notion;
-- decisoes tecnicas e diagramas finais serao mantidos tambem no repositorio.
-
-## Estrutura inicial
+## Organizacao planejada
 
 ```text
-CodeQuest/
-|-- docs/
-|   |-- modelo-dominio.md
-|   `-- requisitos.md
-|-- backend/
-|   |-- src/main/java/          # controllers, dominio e repositorios Java
-|   |-- src/main/resources/     # templates, CSS e migrations Flyway
-|   `-- src/test/               # testes automatizados
-|-- compose.yaml               # PostgreSQL local
-|-- .gitignore
-`-- README.md
+src/       # dominio, interface Swing e inicializacao em Java
+resources/ # imagens do jogo e seus creditos
+tests/     # testes das regras do jogo
+docs/      # requisitos, UML e material para o artigo
 ```
+
+As pastas de codigo serao criadas quando a implementacao comecar. As telas chamarao os objetos de dominio, sem calcular XP ou decidir a evolucao.
+
+## Proximos passos
+
+1. Fechar as regras de XP, energia e evolucao.
+2. Implementar personagem e desafios com testes pequenos.
+3. Construir uma janela Swing com um quiz completo.
+4. Adicionar tres masmorras, avatares e mensagens de excecao.
+5. Testar a demonstracao e preparar artigo e apresentacao.
+
+Patrick pode cuidar de personagem e evolucao; Michael, de masmorras e desafios. Ambos revisam a interface e precisam compreender o codigo inteiro.
 
 ## Documentacao
 
@@ -130,4 +71,4 @@ CodeQuest/
 
 ## Status
 
-Base Java 21 com Spring Boot, Thymeleaf, JPA, Flyway e PostgreSQL criada. A primeira pagina exibe escolas persistidas no banco. Cadastro, personagem, masmorras, quizzes e evolucao ainda serao implementados.
+Escopo simplificado aprovado. A antiga base Spring Boot, PostgreSQL e Docker foi removida da versao atual e permanece no historico Git. A aplicacao Swing ainda nao foi implementada; portanto, ainda nao ha comando de execucao do jogo.

@@ -1,47 +1,36 @@
 # Modelo de dominio
 
-## Entidades principais
+Modelo inicial para um programa pequeno, sem banco ou servidor. As classes abaixo sao planejadas, nao implementadas.
 
-- **Usuario:** representa a conta do estudante.
-- **Personagem:** concentra nivel, energia, experiencia, habilidades e arquetipo atual.
-- **Escola:** representa uma trilha de conhecimento.
-- **Masmorra:** agrupa atividades, dificuldade, requisitos e recompensas.
-- **Atividade:** representa uma leitura, quiz, exercicio textual ou desafio pratico.
-- **Habilidade:** representa uma competencia desbloqueavel.
-- **ProgressoMasmorra:** registra status, tentativas e conclusao.
-- **HistoricoArquetipo:** registra as mudancas de classe do personagem.
+## Classes principais
 
-## Diagrama conceitual inicial
+- **Personagem:** nome, avatar, nivel, energia, XP geral e por trilha, arquetipo e desafios concluidos. Controla recompensas e descanso.
+- **Masmorra:** nome, dificuldade, requisitos e colecao de desafios.
+- **Desafio:** classe abstrata com titulo, trilha, recompensa, custo de energia e operacao de avaliacao.
+- **Quiz:** desafio com pergunta, alternativas e resposta correta.
+- **Leitura:** desafio simples com texto e confirmacao de conclusao.
+- **JanelaJogo:** tela Swing que mostra o estado e encaminha acoes ao dominio.
+
+Trilha e arquetipo podem ser enums. Nao e necessario criar uma subclasse de Personagem para cada classe de RPG: mudar o arquetipo nao deve recriar o personagem.
+
+## Diagrama inicial
 
 ```mermaid
 classDiagram
-    Usuario "1" --> "1" Personagem
-    Personagem "1" o-- "*" Habilidade
-    Personagem "1" --> "*" ProgressoMasmorra
-    Personagem "1" --> "*" HistoricoArquetipo
-    Personagem --> EstrategiaArquetipo
-    Escola "1" --> "*" Masmorra
-    Escola "1" --> "*" Habilidade
-    Masmorra "1" *-- "*" Atividade
-    ProgressoMasmorra "*" --> "1" Masmorra
-
-    class EstrategiaArquetipo {
-        <<interface>>
-        +calcularBonus()
-        +aplicarRecompensa()
+    JanelaJogo --> Personagem
+    JanelaJogo --> Masmorra
+    Masmorra "1" *-- "1..*" Desafio
+    Personagem --> Desafio : registra conclusao
+    class Desafio {
+        <<abstract>>
+        avaliarResposta()
     }
-
-    EstrategiaArquetipo <|.. MagoBackend
-    EstrategiaArquetipo <|.. LadinoFrontend
-    EstrategiaArquetipo <|.. PaladinoSeguranca
-    EstrategiaArquetipo <|.. NecromanteDados
-    EstrategiaArquetipo <|.. ArquimagoFullstack
+    Desafio <|-- Quiz
+    Desafio <|-- Leitura
 ```
 
-## Padroes previstos
+## Separacao de responsabilidades
 
-- **Strategy:** encapsula os bonus de cada arquetipo.
-- **State:** controla os estados de energia do personagem e as atividades permitidas.
-- **Factory:** seleciona a estrategia de arquetipo a partir da experiencia por escola.
+A interface Swing nao calcula XP, concede recompensas nem decide pre-requisitos. Essas regras ficam nos objetos de dominio e podem ser testadas sem abrir uma janela. As excecoes do dominio sao capturadas pela interface e apresentadas como mensagens compreensiveis.
 
-O modelo sera refinado antes da implementacao para definir atributos, operacoes, cardinalidades e persistencia.
+Encapsulamento, composicao, heranca, polimorfismo e colecoes devem aparecer em comportamentos reais. Interfaces e Strategy podem ser acrescentados caso simplifiquem a evolucao; State e Factory nao sao compromissos do escopo.

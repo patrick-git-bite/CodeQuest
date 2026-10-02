@@ -1,42 +1,41 @@
 # Requisitos e regras de negocio
 
-## Atores
+## Ator
 
-- **Estudante:** cria o personagem e realiza atividades.
-- **Administrador ou professor:** cadastra escolas, masmorras, atividades e recompensas.
+**Estudante:** utiliza o programa desktop local para estudar e evoluir um personagem. Nao existem contas ou administrador.
 
 ## Requisitos funcionais
 
-- **RF01:** permitir o cadastro e a autenticacao do estudante.
-- **RF02:** permitir que cada estudante crie um personagem.
-- **RF03:** listar escolas, masmorras e atividades disponiveis.
-- **RF04:** validar energia, nivel e pre-requisitos antes de iniciar uma masmorra.
-- **RF05:** registrar respostas e tentativas das atividades.
-- **RF06:** conceder experiencia geral e experiencia na escola relacionada.
-- **RF07:** aumentar o nivel do personagem ao atingir a experiencia necessaria.
-- **RF08:** recalcular automaticamente o arquetipo depois de uma recompensa.
-- **RF09:** desbloquear habilidades e masmorras ao cumprir os requisitos.
-- **RF10:** armazenar o progresso e o historico de mudancas de arquetipo.
+- **RF01:** criar um personagem com nome e avatar.
+- **RF02:** mostrar nivel, arquetipo, XP geral, XP por trilha e energia.
+- **RF03:** listar tres masmorras com desafios fixos de Backend e Frontend.
+- **RF04:** verificar energia, nivel e pre-requisitos antes de iniciar um desafio.
+- **RF05:** apresentar quizzes, receber alternativas e informar o resultado.
+- **RF06:** conceder XP uma unica vez por desafio concluido.
+- **RF07:** atualizar nivel e arquetipo conforme a experiencia adquirida.
+- **RF08:** recuperar energia ao descansar, sem ultrapassar 100.
+- **RF09:** mostrar erros de entrada e de regras de negocio na janela Swing.
 
-## Regras de negocio iniciais
+## Regras iniciais
 
-- **RN01:** todo personagem inicia como Aprendiz, no nivel 1 e com 100 pontos de energia.
-- **RN02:** uma recompensa de conclusao so pode ser recebida uma vez por atividade.
-- **RN03:** quizzes possuem correcao automatica; desafios praticos dependem de avaliacao manual.
-- **RN04:** atividades podem consumir energia e respostas incorretas podem aplicar uma penalidade adicional.
-- **RN05:** uma masmorra bloqueada nao pode ser iniciada antes do cumprimento de seus pre-requisitos.
-- **RN06:** o arquetipo e determinado pela distribuicao de experiencia entre as escolas.
-- **RN07:** Arquimago Fullstack exige nivel minimo, experiencia minima em Backend e Frontend e equilibrio entre essas escolas.
-- **RN08:** toda mudanca de arquetipo deve ser registrada no historico.
+- O personagem inicia como Aprendiz, nivel 1, XP zero e energia 100.
+- O progresso existe apenas durante a execucao do programa.
+- Resposta incorreta nao concede XP; resposta correta conclui o quiz e concede sua recompensa uma unica vez.
+- Leitura simples pode ser concluida por confirmacao, conforme o desafio cadastrado.
+- Masmorras bloqueadas exigem o cumprimento dos requisitos cadastrados.
+- XP em Backend ou Frontend determina Mago do Backend ou Ladino do Frontend; equilibrio com experiencia suficiente permite Arquimago Fullstack.
+- Custos, penalidades, limites de nivel e regras de empate ainda devem ser definidos pela dupla. As formulas da plataforma anterior nao sao obrigatorias.
 
-## Excecoes de dominio previstas
+## Excecoes previstas
 
 - `PreRequisitoNaoAtendidoException`
-- `NivelInsuficienteException`
 - `EnergiaEsgotadaException`
-- `MasmorraJaConcluidaException`
 - `RespostaInvalidaException`
 
-## Criterio de sucesso do estudo de caso
+## Validacao do MVP
 
-O fluxo principal deve demonstrar um personagem Aprendiz tornando-se Mago do Backend e, depois de equilibrar seus estudos em Frontend, evoluindo para Arquimago Fullstack em tempo de execucao.
+Criar personagem, responder quiz, receber XP, atualizar nivel e arquetipo e ver o resultado na janela. Testar resposta incorreta, recompensa repetida, masmorra bloqueada e descanso.
+
+## Fora do escopo
+
+Login, banco, servidor, administracao de conteudo, habilidades aprimoraveis, moedas, loja, envio de arquivos e avaliacao por professor. Persistencia em arquivo sera considerada apenas se sobrar tempo.
