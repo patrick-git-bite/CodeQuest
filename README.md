@@ -17,7 +17,7 @@ O estudante cria um personagem, responde pequenos quizzes em masmorras e ganha e
 - botao de descanso para recuperar energia;
 - evolucao de Aprendiz para Mago do Backend, Ladino do Frontend ou Arquimago Fullstack.
 
-Os valores de XP, custos e criterios de evolucao serao definidos com exemplos simples antes da implementacao. O progresso ficara em memoria e sera perdido ao fechar o programa. Salvar em arquivo e uma melhoria opcional.
+As regras iniciais de evolucao estao implementadas: cada 100 XP sobe um nivel; a trilha com mais XP define Mago ou Ladino; empate com pelo menos 100 XP em cada trilha define Fullstack. Empate abaixo desse limite define Aprendiz. Os valores das recompensas e custos dos desafios ainda devem ser combinados com Michael. O progresso ficara em memoria e sera perdido ao fechar o programa. Salvar em arquivo e uma melhoria opcional.
 
 Ficam fora do escopo: login, banco, servidor web, painel administrativo, moedas, loja, uploads, multiplayer, combate em tempo real, mapa exploravel, IA e execucao de codigo enviado pelo aluno.
 
@@ -52,7 +52,33 @@ tests/     # testes das regras do jogo
 docs/      # requisitos, UML e material para o artigo
 ```
 
-As pastas de codigo serao criadas quando a implementacao comecar. As telas chamarao os objetos de dominio, sem calcular XP ou decidir a evolucao.
+As pastas `src/` e `tests/` ja contem a primeira implementacao de Personagem. Imagens e interface serao adicionadas depois. As telas chamarao os objetos de dominio, sem calcular XP ou decidir a evolucao.
+
+## Executar o teste inicial
+
+Com o JDK 21 instalado, execute na raiz do projeto:
+
+```bash
+javac -d out src/codequest/dominio/*.java tests/codequest/dominio/PersonagemTeste.java
+java -cp out codequest.dominio.PersonagemTeste
+```
+
+O programa testa XP por trilha, nivel, mudancas de arquetipo, consumo de energia, descanso e entradas invalidas, e imprime os valores do personagem. Ainda nao abre uma janela. A recompensa unica por desafio sera controlada na integracao com as classes de desafios, nao pelo metodo generico de ganhar XP.
+
+## Parte do personagem
+
+`Personagem` nao possui setters de XP, nivel ou energia. Nivel e arquetipo sao calculados a partir do XP para que nao fiquem desatualizados. As operacoes disponiveis sao:
+
+- `new Personagem(nome)`: cria personagem no nivel 1, sem XP e com energia 100.
+- `ganharExperiencia(trilha, quantidade)`: soma XP positivo em `Trilha.BACKEND` ou `Trilha.FRONTEND`.
+- `consumirEnergia(quantidade)`: desconta energia positiva ou lanca `EnergiaEsgotadaException` sem alterar o estado.
+- `descansar()`: recupera a energia para 100.
+- getters: permitem consultar nome, XP por trilha, XP geral, nivel, energia e arquetipo.
+- `getArquetipo().getNome()`: fornece o nome da classe para a futura tela.
+
+Exemplo de evolucao: 100 XP Backend produz Mago de nivel 2; mais 100 XP Frontend produz Fullstack de nivel 3; mais 50 XP Frontend produz Ladino de nivel 3. O mesmo objeto e mantido em todas as etapas.
+
+Michael implementara masmorras e desafios separadamente. Antes de integrar, devemos combinar custo e recompensa. A tentativa consome energia; so uma resposta correta e ainda nao recompensada chama `ganharExperiencia`. Respostas invalidas devem ser rejeitadas antes de consumir energia. A interface Swing sera trabalho conjunto depois dos objetos de dominio.
 
 ## Proximos passos
 
@@ -71,4 +97,4 @@ Patrick pode cuidar de personagem e evolucao; Michael, de masmorras e desafios. 
 
 ## Status
 
-Escopo simplificado aprovado. A antiga base Spring Boot, PostgreSQL e Docker foi removida da versao atual e permanece no historico Git. A aplicacao Swing ainda nao foi implementada; portanto, ainda nao ha comando de execucao do jogo.
+Parte de dominio do Personagem implementada: XP, nivel, energia, descanso e quatro arquetipos, com testes no terminal. Masmorras, desafios, conclusoes, avatares e interface Swing ainda nao foram implementados. A antiga base Spring Boot, PostgreSQL e Docker permanece apenas no historico Git.

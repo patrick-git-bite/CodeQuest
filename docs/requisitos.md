@@ -23,8 +23,13 @@
 - Resposta incorreta nao concede XP; resposta correta conclui o quiz e concede sua recompensa uma unica vez.
 - Leitura simples pode ser concluida por confirmacao, conforme o desafio cadastrado.
 - Masmorras bloqueadas exigem o cumprimento dos requisitos cadastrados.
-- XP em Backend ou Frontend determina Mago do Backend ou Ladino do Frontend; equilibrio com experiencia suficiente permite Arquimago Fullstack.
-- Custos, penalidades, limites de nivel e regras de empate ainda devem ser definidos pela dupla. As formulas da plataforma anterior nao sao obrigatorias.
+- O nivel e `1 + XP geral / 100`, usando divisao inteira: 99 XP corresponde ao nivel 1, 100 ao nivel 2 e 200 ao nivel 3.
+- Backend maior que Frontend determina Mago; Frontend maior determina Ladino.
+- XP igual nas duas trilhas, com pelo menos 100 XP em cada, determina Arquimago Fullstack. Empate abaixo desse limite determina Aprendiz.
+- O arquetipo pode mudar novamente quando o foco de estudo mudar. Fullstack nao e um desbloqueio permanente.
+- Descanso recupera a energia para 100. Consumo maior que a energia disponivel lanca excecao e preserva o valor anterior.
+- Nome vazio, trilha nula e quantidades nao positivas sao rejeitados. XP que excede o limite de `int` tambem e rejeitado antes de alterar o estado.
+- Custos e recompensas dos desafios ainda devem ser definidos pela dupla. Sugestao inicial: 50 XP por acerto e 10 de energia por tentativa. Esses valores nao estao fixados na classe Personagem.
 
 ## Excecoes previstas
 

@@ -1,17 +1,17 @@
 # Modelo de dominio
 
-Modelo inicial para um programa pequeno, sem banco ou servidor. As classes abaixo sao planejadas, nao implementadas.
+Modelo para um programa pequeno, sem banco ou servidor. Personagem, Trilha, Arquetipo e EnergiaEsgotadaException ja estao implementados. As demais classes permanecem planejadas.
 
 ## Classes principais
 
-- **Personagem:** nome, avatar, nivel, energia, XP geral e por trilha, arquetipo e desafios concluidos. Controla recompensas e descanso.
+- **Personagem:** possui nome, energia e XP por trilha; calcula XP geral, nivel e arquetipo. Controla ganho de XP, consumo de energia e descanso. Avatar e registro de conclusoes ainda nao estao implementados.
 - **Masmorra:** nome, dificuldade, requisitos e colecao de desafios.
 - **Desafio:** classe abstrata com titulo, trilha, recompensa, custo de energia e operacao de avaliacao.
 - **Quiz:** desafio com pergunta, alternativas e resposta correta.
 - **Leitura:** desafio simples com texto e confirmacao de conclusao.
 - **JanelaJogo:** tela Swing que mostra o estado e encaminha acoes ao dominio.
 
-Trilha e arquetipo podem ser enums. Nao e necessario criar uma subclasse de Personagem para cada classe de RPG: mudar o arquetipo nao deve recriar o personagem.
+Trilha e Arquetipo sao enums. Nao e necessario criar uma subclasse de Personagem para cada classe de RPG: mudar o arquetipo nao recria o personagem.
 
 ## Diagrama inicial
 
