@@ -52,7 +52,39 @@ tests/     # testes das regras do jogo
 docs/      # requisitos, UML e material para o artigo
 ```
 
-As pastas `src/` e `tests/` ja contem a primeira implementacao de Personagem. Imagens e interface serao adicionadas depois. As telas chamarao os objetos de dominio, sem calcular XP ou decidir a evolucao.
+As pastas `src/` e `tests/` contem o dominio e a primeira janela Swing. As imagens ficam em `resources/avatares/`. As telas chamam os objetos de dominio, sem calcular XP ou decidir a evolucao.
+
+## Executar a janela
+
+Requer JDK 21 com suporte grafico e uma sessao desktop. Na raiz:
+
+```bash
+javac -d out src/codequest/dominio/*.java src/codequest/interfacegrafica/*.java src/codequest/Main.java
+java -cp out:resources codequest.Main
+```
+
+No Windows, use `out;resources` no lugar de `out:resources`. No Linux, uma instalacao somente headless do Java nao abre Swing. Nesta maquina, os testes graficos foram executados com o runtime da extensao Java do VS Code, pois o Java do sistema e headless.
+
+Escolha uma ordem de RPG, informe o nome e clique em Criar personagem. A ordem fica travada durante a sessao: Aventureiro, Bardo, Paladino, Guerreiro, Bruxo ou Feiticeiro. Ela e separada da afinidade tecnica Backend/Frontend calculada pelo dominio, mostrada como Estudos na tela.
+
+Fases visuais da ordem escolhida, determinadas pelo nivel geral:
+
+- niveis 1 e 2: Aprendiz de Guerreiro, Aprendiz de Bruxo etc., usando o retrato comum de Aprendiz;
+- niveis 3 e 4: nome da ordem e seu avatar correspondente;
+- nivel 5 em diante: titulo de Veterano e cena de acao da ordem.
+
+Nao existem bonus diferentes entre ordens nem uma fase suprema obrigatoria. A escolha ainda e guardada apenas pela janela, sem persistencia. As imagens atuais bastam para o MVP.
+
+Descansar fica disponivel apenas quando existe personagem com energia abaixo de 100. Como desafios ainda nao foram integrados, a primeira tela nao concede XP nem consome energia artificialmente.
+
+Para testar a interface, em uma sessao grafica:
+
+```bash
+javac -d out src/codequest/dominio/*.java src/codequest/interfacegrafica/*.java tests/codequest/interfacegrafica/JanelaJogoTeste.java
+java -cp out:resources codequest.interfacegrafica.JanelaJogoTeste
+```
+
+O teste verifica os seis avatares e cenas, criacao de personagem e descanso, e salva capturas em `out/`. Aparencia e progresso ainda nao sao salvos entre execucoes.
 
 ## Executar o teste inicial
 
@@ -97,4 +129,4 @@ Patrick pode cuidar de personagem e evolucao; Michael, de masmorras e desafios. 
 
 ## Status
 
-Parte de dominio do Personagem implementada: XP, nivel, energia, descanso e quatro arquetipos, com testes no terminal. Masmorras, desafios, conclusoes, avatares e interface Swing ainda nao foram implementados. A antiga base Spring Boot, PostgreSQL e Docker permanece apenas no historico Git.
+Dominio do Personagem e primeira janela Swing implementados, com seis aparencias e cenas de acao, criacao de personagem, barras de XP/energia e descanso. Testes do dominio e da janela disponiveis. Masmorras, desafios e conclusoes ainda aguardam integracao. A antiga base Spring Boot, PostgreSQL e Docker permanece apenas no historico Git.
