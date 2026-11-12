@@ -9,19 +9,19 @@ public abstract class Desafio {
 
     public Desafio(String tituloDesafio, Trilha trilha, int recompensaXp, int custoEnergia) {
 
-        if(tituloDesafio == null || tituloDesafio.isBlank()) {
+        if (tituloDesafio == null || tituloDesafio.isBlank()) {
             throw new IllegalArgumentException("Título é obrigatório");
         }
 
-        if(trilha == null) {
+        if (trilha == null) {
             throw new IllegalArgumentException("Trilha é obrigatório");
         }
 
-        if(recompensaXp < 0 || custoEnergia < 0) {
-            throw new IllegalArgumentException("Recompensa e custo de energia não podem ser valores negativos");
+        if (recompensaXp <= 0 || custoEnergia <= 0) {
+            throw new IllegalArgumentException("Recompensa e custo de energia devem ser valores positivos");
         }
 
-        this.tituloDesafio = tituloDesafio;
+        this.tituloDesafio = tituloDesafio.trim();
         this.trilha = trilha;
         this.recompensaXp = recompensaXp;
         this.custoEnergia = custoEnergia;
@@ -42,7 +42,7 @@ public abstract class Desafio {
         }
 
         if (!respostaValida(resposta)) {
-            throw new IllegalArgumentException("Resposta inválida!");
+            throw new RespostaInvalidaException("Resposta inválida!");
         }
 
         personagem.consumirEnergia(custoEnergia);

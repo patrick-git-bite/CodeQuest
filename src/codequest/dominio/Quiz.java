@@ -7,35 +7,45 @@ public class Quiz extends Desafio {
     private final int indiceRC; // RC = Resposta correta.
 
     public Quiz(String tituloDesafio, Trilha trilha, int recompensaXp, int custoEnergia, String enunciado, List<String> alternativas, int indiceRC) {
+        super(tituloDesafio, trilha, recompensaXp, custoEnergia);
 
-        if(enunciado == null || enunciado.isBlank()) {
+        if (enunciado == null || enunciado.isBlank()) {
             throw new IllegalArgumentException("Enunciado é obrigatório");
         }
 
-        if(alternativas == null || alternativas.size() < 2) {
+        if (alternativas == null || alternativas.size() < 2) {
             throw new IllegalArgumentException("O Quiz precisa de pelo menos 2 alternativas");
         }
 
-        if(indiceRC < 0 || indiceRC >= alternativas.size()) {
-            throw new IllegalArgumentException("Indíce da resposta inválido");
+        for (String alternativa : alternativas) {
+            if (alternativa == null || alternativa.isBlank()) {
+                throw new IllegalArgumentException("As alternativas não podem ser vazias");
+            }
         }
 
-        super(tituloDesafio, trilha, recompensaXp, custoEnergia);
-        this.enunciado = enunciado;
+        if (indiceRC < 0 || indiceRC >= alternativas.size()) {
+            throw new IllegalArgumentException("Índice da resposta inválido");
+        }
+
+        this.enunciado = enunciado.trim();
         this.alternativas = List.copyOf(alternativas);
         this.indiceRC = indiceRC;
     }
 
     @Override
     protected boolean respostaValida(String resposta) {
-        if(resposta == null || !resposta.matches("//d+")) {
+        if (resposta == null) {
+            return false;
+        }
+
+        String texto = resposta.trim();
+        if (!texto.matches("\\d+")) {
             return false;
         }
 
         try {
-            int numero = Integer.parseInt(resposta);
+            int numero = Integer.parseInt(texto);
             return numero >= 1 && numero <= alternativas.size();
-
         } catch (NumberFormatException e) {
             return false;
         }
@@ -43,11 +53,11 @@ public class Quiz extends Desafio {
 
     @Override
     protected boolean avaliarResposta(String resposta) {
-        if(!respostaValida(resposta)) {
-            throw new IllegalArgumentException("Alternativa não é válida");
+        if (!respostaValida(resposta)) {
+            throw new RespostaInvalidaException("Alternativa não é válida");
         }
 
-        int indiceEscolhido = Integer.parseInt(resposta) - 1;
+        int indiceEscolhido = Integer.parseInt(resposta.trim()) - 1;
 
         return indiceEscolhido == indiceRC;
     }

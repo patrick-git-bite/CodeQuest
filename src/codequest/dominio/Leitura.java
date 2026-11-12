@@ -1,17 +1,16 @@
 package codequest.dominio;
 
-import java.util.List;
-
 public class Leitura extends Desafio {
     private final String conteudo;
 
     public Leitura(String tituloDesafio, Trilha trilha, int recompensaXp, int custoEnergia, String conteudo) {
+        super(tituloDesafio, trilha, recompensaXp, custoEnergia);
+
         if (conteudo == null || conteudo.isBlank()) {
-            throw new IllegalArgumentException("Conteudo precisa ser válido");
+            throw new IllegalArgumentException("Conteúdo precisa ser válido");
         }
 
-        super(tituloDesafio, trilha, recompensaXp, custoEnergia);
-        this.conteudo = conteudo;
+        this.conteudo = conteudo.trim();
     }
 
     @Override
@@ -21,11 +20,11 @@ public class Leitura extends Desafio {
 
     @Override
     protected boolean avaliarResposta(String resposta) {
-       if(!respostaValida(resposta)) {
-           throw new IllegalArgumentException("Confirmação inválida");
-       }
+        if (!respostaValida(resposta)) {
+            throw new RespostaInvalidaException("Confirmação inválida");
+        }
 
-       return true;
+        return true;
     }
 
     public String getConteudo() {
