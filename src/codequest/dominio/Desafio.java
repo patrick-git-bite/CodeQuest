@@ -30,7 +30,7 @@ public abstract class Desafio {
 
     protected abstract boolean respostaValida(String resposta);
 
-    public abstract boolean avaliarResposta(String resposta);
+    protected abstract boolean avaliarResposta(String resposta);
 
     public final boolean tentar(Personagem personagem, String resposta) {
         if (personagem == null) {
